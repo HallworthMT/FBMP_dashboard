@@ -1,4 +1,6 @@
 
+
+
 //var sel_species;
 let sel_species_toGet
 
@@ -9,3 +11,5 @@ function getSelected(){
     console.log(sel_species)
     document.querySelector('.Selected_Species').textContent = sel_species;
 }
+
+export{dropDown}

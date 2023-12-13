@@ -96,6 +96,17 @@ uniqueSpp.map(i => plotSpp(i))
 */
 // https://observablehq.com/@d3/multi-line-chart/2?intent=fork 
 
+import { grabYrsResearcher } from "/js/yearSurveyed.js";
+
+
+/*
+//MIKE NEED TO ADD THE YEARS A SITE WAS SURVEYED 
+http://vtatlasoflife.org:4321/counts?countsTransect=CRAFTSBURYOU&distinct=countsYear
+
+// HERE IS THE URL TO GET THE RESEARCHER               
+http://vtatlasoflife.org:4321/counts?countsTransect=CRAFTSBURYOU&distinct=countsResearcher
+
+*/
 
 // Specify the chart’s dimensions.
 var SA_element_info = document.getElementById('site_abundance_div');
@@ -111,7 +122,7 @@ var SA_positionInfo = SA_element_info.getBoundingClientRect();
   var sa_margin = { top: sa_height*0.05,
                    bottom: sa_height*0.1,
                    right: sa_width*0.05,  
-                   left: sa_width*0.15 };
+                   left: sa_width*0.10 };
   
   // Calculate the inner dimensions of the plot
   var sa_innerWidth = sa_width - (sa_margin.left + sa_margin.right);
@@ -137,15 +148,32 @@ var sel_site = 1001;
 
 let site_data
 
+export{sel_site}
+ 
 getSiteAbundance({site: sel_site});
+grabYrsResearcher()
 
+const fetchSites = fetch("http://vtatlasoflife.org:4321/table/survey_sites")
+.then(response => {return response.json()})
+.then(res => site_data = res.rows)
+.then(()=>{
 var siteDropDown = d3.select("#SelectSite")
-                     .on("change", function() {
+
+var siteOptions = siteDropDown.selectAll('option')
+                              .data(site_data)
+                              .enter()
+                              .append('option')
+                              .attr('value', d => d.sitesName)
+                              .text(d => `${d.sitesTransect} - ${d.sitesName} (${d.sitesNotes})`);
+                            
+    siteDropDown.on("change", function() {
                      sel_site = this.value
                      console.log(this.value);
-                     getSiteAbundance()
-                     });
- 
+                     getSiteAbundance();
+                     grabYrsResearcher();
+                    });
+              });
+
 // apicall
 function getSiteAbundance(){    
 
@@ -174,7 +202,7 @@ var y = d3.scaleLinear()
 // Add the horizontal axis.
 svg.append("g")
     .attr("transform", `translate(0,${sa_height - marginBottom})`)
-    .call(d3.axisBottom(x).ticks(sa_width / 80).tickSizeOuter(0));
+    .call(d3.axisBottom(x).tickFormat(d3.format("d")).ticks(sa_width / 80).tickSizeOuter(0));
 
 // Add the vertical axis.
 svg.append("g")
