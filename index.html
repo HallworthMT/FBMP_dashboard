@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html>
+<title>Forest Bird Monitoring Dashboard</title>
+<link rel="icon" type = "jgp" href="etc/VCE bird sun only.jpg" />
 <head>
 <meta charset="utf-8"/> <!-- resolve 'character encoding' error -->
 <!-- don't allow the browser to cache results -->
@@ -18,6 +20,7 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <script type='module' src="js/trends.js"></script>
 <script type='module' src="js/VTshape.js"></script>
@@ -25,7 +28,8 @@
 <script type='module' src="js/trend_dotplot.js"></script>
 <script type='module' src="js/Site_abundance.js"></script>
 <script type='module' src="js/doughnut_trends.js"></script>
-<script type='text/javascript' src="js/SpeciesSelector.js"></script>
+<script type='module' src="js/SpeciesSelector.js"></script>
+<script type='module' src="js/yearSurveyed.js"></script>
 
 <style>
   .tooltip {
@@ -53,64 +57,6 @@ pointer-events: none;
 
   <br>
   <p><h4>Select a species of interest:</h4> <select id="Species_Select" style="background-color: white;"> 
-    <option value=AMGO>American Goldfinch (</em>Spinus tristis</em>)</option>                  
-    <option value=AMRE>American Redstart (</em>Setophaga ruticilla</em>)</option>               
-    <option value=AMRO>American Robin (</em>Turdus migratorius</em>)</option>                   
-    <option value=BAOR>Baltimore Oriole (</em>Icterus galbula</em>)</option>                    
-    <option value=BAWW>Black-and-white Warbler (</em>Mniotilta varia</em>)</option>             
-    <option value=BCCH>Black-capped Chickadee (</em>Poecile atricapillus</em>)</option>         
-    <option value=BHCO>Brown-headed Cowbird (</em>Molothrus ater</em>)</option>                 
-    <option value=BHVI>Blue-headed Vireo (</em>Vireo solitarius</em>)</option>                  
-    <option value=BLBW>Blackburnian Warbler (</em>Setophaga fusca</em>)</option>                
-    <option value=BLJA>Blue Jay (</em>Cyanocitta cristata</em>)</option>                        
-    <option value=BRCR>Brown Creeper (</em>Certhia americana</em>)</option>                     
-    <option value=BTBW>Black-throated Blue Warbler (</em>Setophaga caerulescens</em>)</option>  
-    <option value=BTNW>Black-throated Green Warbler (</em>Setophaga virens</em>)</option>       
-    <option value=CAWA>Canada Warbler (</em>Cardellina canadensis</em>)</option>                
-    <option value=CEDW>Cedar Waxwing (</em>Bombycilla cedrorum</em>)</option>                   
-    <option value=COYE>Common Yellowthroat (</em>Geothlypis trichas</em>)</option>              
-    <option value=CSWA>Chestnut-sided Warbler (</em>Setophaga pensylvanica</em>)</option>       
-    <option value=DOWO>Downy Woodpecker (</em>Dryobates pubescens</em>)</option>                
-    <option value=EAWP>Eastern Wood-Pewee (</em>Contopus virens</em>)</option>                  
-    <option value=GCFL>Great Crested Flycatcher (</em>Myiarchus crinitus</em>)</option>         
-    <option value=GCKI>Golden-crowned Kinglet (</em>Regulus satrapa</em>)</option>              
-    <option value=GRCA>Gray Catbird (</em>Dumetella carolinensis</em>)</option>                 
-    <option value=HAWO>Hairy Woodpecker (</em>Dryobates villosus</em>)</option>                 
-    <option value=HETH>Hermit Thrush (</em>Catharus guttatus</em>)</option>                     
-    <option value=LEFL>Least Flycatcher (</em>Empidonax minimus</em>)</option>                  
-    <option value=MAWA>Magnolia Warbler (</em>Setophaga magnolia</em>)</option>                 
-    <option value=MODO>Mourning Dove (</em>Zenaida macroura</em>)</option>                      
-    <option value=MOWA>Mourning Warbler (</em>Geothlypis philadelphia</em>)</option>            
-    <option value=MYWA>Myrtle Warbler (</em>Setophaga coronata coronata</em>)</option>          
-    <option value=NAWA>Nashville Warbler (</em>Oreothlypis ruficapilla</em>)</option>           
-    <option value=NOPA>Northern Parula (</em>Setophaga americana</em>)</option>                 
-    <option value=NOWA>Northern Waterthrush (</em>Parkesia noveboracensis</em>)</option>        
-    <option value="OVEN" selected>Ovenbird (</em>Seiurus aurocapilla</em>)</option>                        
-    <option value=PIWO>Pileated Woodpecker (</em>Dryocopus pileatus</em>)</option>              
-    <option value=PUFI>Purple Finch (</em>Haemorhous purpureus</em>)</option>                   
-    <option value=RBGR>Rose-breasted Grosbeak (</em>Pheucticus ludovicianus</em>)</option>      
-    <option value=RBNU>Red-breasted Nuthatch (</em>Sitta canadensis</em>)</option>              
-    <option value=RBWO>Red-bellied Woodpecker (</em>Melanerpes carolinus</em>)</option>         
-    <option value=RESQ>North American Red Squirrel (</em>Tamiasciurus hudsonicus</em>)</option> 
-    <option value=REVI>Red-eyed Vireo (</em>Vireo olivaceus</em>)</option>                      
-    <option value=SCJU>Slate-colored Junco (</em>Junco hyemalis  hyemalis</em>)</option>        
-    <option value=SCTA>Scarlet Tanager (</em>Piranga olivacea</em>)</option>                    
-    <option value=SOSP>Song Sparrow (</em>Melospiza melodia</em>)</option>                      
-    <option value=SWSP>Swamp Sparrow (</em>Melospiza georgiana</em>)</option>                   
-    <option value=SWTH>Swainson's Thrush (</em>Catharus ustulatus</em>)</option>                
-    <option value=TUTI>Tufted Titmouse (</em>Baeolophus bicolor</em>)</option>                  
-    <option value=VEER>Veery (</em>Catharus fuscescens</em>)</option>                           
-    <option value=WBNU>White-breasted Nuthatch (<em>Sitta carolinensis</em>)</option>          
-    <option value=WIWR>Winter Wren (</em>Troglodytes hiemalis</em>)</option>                    
-    <option value=WOTH>Wood Thrush (</em>Hylocichla mustelina</em>)</option>                    
-    <option value=WTSP>White-throated Sparrow (</em>Zonotrichia albicollis</em>)</option>       
-    <option value=YBFL>Yellow-bellied Flycatcher (</em>Empidonax flaviventris</em>)</option>    
-    <option value=YBSA>Yellow-bellied Sapsucker (</em>Sphyrapicus varius</em>)</option>         
-    <option value=YSFL>Yellow-shafted Flicker (</em>Colaptes auratus auratus</em>)</option>     
-    <option value=YTVI>Yellow-throated Vireo (</em>Vireo flavifrons</em>)</option>              
-    <option value=RESQ>North American Red Squirrel (</em>Tamiasciurus hudsonicus</em>)</option> 
-    <option value=CHIP>Eastern Chipmunk (</em>Tamias striatus</em>)</option>                    
-    <option value=GRSQ>Eastern Gray Squirrel (</em>Sciurus carolinensis</em>)</option>
   </select></p>        
   
 
@@ -139,7 +85,7 @@ pointer-events: none;
   <br>
   </div> <!-- End of 1st Row -->
 
-
+  <div class="container">
 <div class="row" style="height: 500px">
   <div class="col-md-2">
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
@@ -149,26 +95,49 @@ pointer-events: none;
       <div id="orderedTrends"></div>
   </div>
 </div>
+</div>
 
+<div class = "container">
 <div class="row" style="height: 600px">
   <div class="col-md-8" id="site_abundance_div">
     <div id="Site_Relative_Abundance"></div>
-  </div>
+  </div> 
   <div class="col-md-4">
+    <div class = "row" style="height: 250px">
+    <br>
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
     <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
-    <p><h4>Select a survey site:</h4> <select id="SelectSite" style="background-color: white;"> 
-      <option value=1001>CONCORDWOODS 10.01</option><option value=1002>CONCORDWOODS 10.02</option><option value=1003>CONCORDWOODS 10.03</option><option value=1004>CONCORDWOODS 10.04</option><option value=1005>CONCORDWOODS 10.05</option><option value=101>SANDBARWMA 1.01</option><option value=102>SANDBARWMA 1.02</option><option value=103>SANDBARWMA 1.03</option><option value=104>SANDBARWMA 1.04</option><option value=105>SANDBARWMA 1.05</option><option value=1101>MAYPOND 11.01</option><option value=1102>MAYPOND 11.02</option><option value=1103>MAYPOND 11.03</option><option value=1104>MAYPOND 11.04</option><option value=1105>MAYPOND 11.05</option><option value=11701>NORTHBRANCHR North Branch Park</option><option value=11702>NORTHBRANCHR North Branch Park</option><option value=11703>NORTHBRANCHR North Branch Park</option><option value=11704>NORTHBRANCHR North Branch Park</option><option value=11705>NORTHBRANCHR North Branch Park</option><option value=1201>MOOSEBOG 12.01</option><option value=1202>MOOSEBOG 12.02</option><option value=1203>MOOSEBOG 12.03</option><option value=1204>MOOSEBOG 12.04</option><option value=1205>MOOSEBOG 12.05</option><option value=1301>BEARSWAMP 13.01</option><option value=1302>BEARSWAMP 13.02</option><option value=1303>BEARSWAMP 13.03</option><option value=1304>BEARSWAMP 13.04</option><option value=1305>BEARSWAMP 13.05</option><option value=1401>UNDERHILLSTA 14.01</option><option value=1402>UNDERHILLSTA 14.02</option><option value=1403>UNDERHILLSTA 14.03</option><option value=1404>UNDERHILLSTA 14.04</option><option value=1405>UNDERHILLSTA 14.05</option><option value=1701>MERCKFOREST 17.01</option><option value=1702>MERCKFOREST 17.02</option><option value=1703>MERCKFOREST 17.03</option><option value=1704>MERCKFOREST 17.04</option><option value=1705>MERCKFOREST 17.05</option><option value=2>BRAMHALL BRPR2</option><option value=201>PEASEMT 2.01</option><option value=202>PEASEMT 2.02</option><option value=203>PEASEMT 2.03</option><option value=204>PEASEMT 2.04</option><option value=205>PEASEMT 2.05</option><option value=2101>STEAMMILLBRO 21.01</option><option value=2102>STEAMMILLBRO 21.02</option><option value=2103>STEAMMILLBRO 21.03</option><option value=2104>STEAMMILLBRO 21.04</option><option value=2105>STEAMMILLBRO 21.05</option><option value=2401>GREENMTAUDUB 24.01</option><option value=2402>GREENMTAUDUB 24.02</option><option value=2403>GREENMTAUDUB 24.03</option><option value=2404>GREENMTAUDUB 24.04</option><option value=2405>GREENMTAUDUB 24.05</option><option value=2901>LITTLEASCUTN 29.01</option><option value=2902>LITTLEASCUTN 29.02</option><option value=2903>LITTLEASCUTN 29.03</option><option value=2904>LITTLEASCUTN 29.04</option><option value=2905>LITTLEASCUTN 29.05</option><option value=3>BRAMHALL BRPR3</option><option value=301>CORNWALLSWAM 3.01</option><option value=302>CORNWALLSWAM 3.02</option><option value=303>CORNWALLSWAM 3.03</option><option value=304>CORNWALLSWAM 3.04</option><option value=305>CORNWALLSWAM 3.05</option><option value=3101>BANCROFTWOOD 31.01</option><option value=3102>BANCROFTWOOD 31.02</option><option value=3103>BANCROFTWOOD 31.03</option><option value=3104>BANCROFTWOOD 31.04</option><option value=3105>BANCROFTWOOD 31.05</option><option value=3201>BRISTOLCLIFF 32.01</option><option value=3202>BRISTOLCLIFF 32.02</option><option value=3203>BRISTOLCLIFF 32.03</option><option value=3204>BRISTOLCLIFF 32.04</option><option value=3205>BRISTOLCLIFF 32.05</option><option value=3301>ETHANALLENFI 33.01</option><option value=3302>ETHANALLENFI 33.02</option><option value=3303>ETHANALLENFI 33.03</option><option value=3304>ETHANALLENFI 33.04</option><option value=3305>ETHANALLENFI 33.05</option><option value=4>BRAMHALL BRPR4</option><option value=401>SHAWMT Shaw Mt.</option><option value=402>SHAWMT Shaw Mt.</option><option value=403>SHAWMT Shaw Mt.</option><option value=404>SHAWMT Shaw Mt.</option><option value=405>SHAWMT Shaw Mt.</option><option value=5>BRAMHALL BRPR5</option><option value=501>GALICKPRESER Bald Mt.</option><option value=502>GALICKPRESER Bald Mt.</option><option value=503>GALICKPRESER Bald Mt.</option><option value=504>GALICKPRESER Bald Mt.</option><option value=505>GALICKPRESER Bald Mt.</option><option value=5401>LYEBROOK 54.01</option><option value=5402>LYEBROOK 54.02</option><option value=5403>LYEBROOK 54.03</option><option value=5404>LYEBROOK 54.04</option><option value=5405>LYEBROOK 54.05</option><option value=5701>MARSHBILLING 57.01</option><option value=5702>MARSHBILLING 57.02</option><option value=5703>MARSHBILLING 57.03</option><option value=5704>MARSHBILLING 57.04</option><option value=5705>MARSHBILLING 57.05</option><option value=601>SUGARHOLLOW 6.01</option><option value=602>SUGARHOLLOW 6.02</option><option value=603>SUGARHOLLOW 6.03</option><option value=604>SUGARHOLLOW 6.04</option><option value=605>SUGARHOLLOW 6.05</option><option value=7001>CHANDLERRIDG 70.01</option><option value=7002>CHANDLERRIDG 70.02</option><option value=7003>CHANDLERRIDG 70.03</option><option value=7004>CHANDLERRIDG 70.04</option><option value=7005>CHANDLERRIDG 70.05</option><option value=701>THECAPE 7.01</option><option value=702>THECAPE 7.02</option><option value=703>THECAPE 7.03</option><option value=704>THECAPE 7.04</option><option value=705>THECAPE 7.05</option><option value=801>DORSETBATCAV 8.01</option><option value=802>DORSETBATCAV 8.02</option><option value=803>DORSETBATCAV 8.03</option><option value=804>DORSETBATCAV 8.04</option><option value=805>DORSETBATCAV 8.05</option><option value=901>ROYMTWMA 9.01</option><option value=902>ROYMTWMA 9.02</option><option value=903>ROYMTWMA 9.03</option><option value=904>ROYMTWMA 9.04</option><option value=905>ROYMTWMA 9.05</option><option value=9101>BREADLOAFWIL 91.01</option><option value=9102>BREADLOAFWIL 91.02</option><option value=9103>BREADLOAFWIL 91.03</option><option value=9104>BREADLOAFWIL 91.04</option><option value=9105>BREADLOAFWIL 91.05</option><option value=9201>BLACKMT 92.01</option><option value=9202>BLACKMT 92.02</option><option value=9203>BLACKMT 92.03</option><option value=9204>BLACKMT 92.04</option><option value=9205>BLACKMT 92.05</option><option value=9301>GREENRIVERRE 93.01</option><option value=9302>GREENRIVERRE 93.02</option><option value=9303>GREENRIVERRE 93.03</option><option value=9304>GREENRIVERRE 93.04</option><option value=9305>GREENRIVERRE 93.05</option><option value=AM-1>APPYMT Appy Mt.-Point 1</option><option value=AM-2>APPYMT Appy Mt.-Point 2</option><option value=AM-3>APPYMT Appy Mt.-Point 3</option><option value=AM-4>APPYMT Appy Mt.-Point 4</option><option value=AM-5>APPYMT Appy Mt.-Point 5</option><option value=BAKERBUSHPT1>BAKERBUSH Baker Bush Pt. 1</option><option value=BAKERBUSHPT2>BAKERBUSH Baker Bush Pt. 2</option><option value=BAKERBUSHPT3>BAKERBUSH Baker Bush Pt. 3</option><option value=BAKERBUSHPT4>BAKERBUSH Baker Bush Pt. 4</option><option value=BAKERBUSHPT5>BAKERBUSH Baker Bush Pt. 5</option><option value=CRAFTSBUYPT1>CRAFTSBURYOU Craftsbury PT1</option><option value=CRAFTSBUYPT2>CRAFTSBURYOU Craftsbury PT2</option><option value=CRAFTSBUYPT3>CRAFTSBURYOU Craftsbury PT3</option><option value=CRAFTSBUYPT4>CRAFTSBURYOU Craftsbury PT4</option><option value=CRAFTSBUYPT5>CRAFTSBURYOU Craftsbury PT5</option>    
-  </select>
+    
+    <p><h4>Select a survey site:</h4></p>
+    <select id="SelectSite"></select>
+    <br>
+    <br>
     </div>
+    <div class = "row">
+      <br>
+      <br>
+      <div style="background-color: rgb(159, 162, 165); 
+                  border-radius: 10px;
+                  padding: 15px;
+                  border-color: black;
+                  border-width: 3;">
+   <i class="fa fa-binoculars" aria-hidden="true" style="float:left; font-size: 48px; padding: 5px"></i>
+      <p style="font-weight: bold">This transect was surveyed between <span id="SiteSurveyYears"></span></p>
+      <span id="SiteResearchers"></span>
+      </div>
+    </div> <!-- end row within column -->
+</div>
 </div>
 
-<div class="row">
-  <div class="col-md-6">
+<div class = "container">
+<div class="row" style="height: 600px">
+  <div class="col-md-4">
+    <br>
+    <br>
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
     <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
   </div>
-  <div class="col-md-6" id="Trend_doughnut">
+  <div class="col-md-8" id="Trend_doughnut">
 <div id="TrendCircle"></div>
 </div>
 </div>
