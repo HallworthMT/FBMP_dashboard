@@ -96,8 +96,9 @@ uniqueSpp.map(i => plotSpp(i))
 */
 // https://observablehq.com/@d3/multi-line-chart/2?intent=fork 
 
-import { grabYrsResearcher } from "/js/yearSurveyed.js";
-
+import { grabYrsResearcher } from "./yearSurveyed.js";
+import { makeTransectMap } from "./siteInset.js";
+import { retrieveSiteTrends } from "./siteTrendDonut.js";
 
 /*
 //MIKE NEED TO ADD THE YEARS A SITE WAS SURVEYED 
@@ -144,53 +145,70 @@ var svg = d3
     .attr("viewBox", [0, 0, sa_width, sa_height])
     .attr("style", "max-width: 100%; height: auto; overflow: visible; font: 12px sans-serif;");
 
-var sel_site = 1001;
+var sel_site = "CONCORDWOODS";
+var sel_trans = "CONCORDWOODS";
 
 let site_data
+var tran_data;
 
 export{sel_site}
+export{sel_trans}
  
 getSiteAbundance({site: sel_site});
 grabYrsResearcher()
+makeTransectMap("CONCORDWOODS");
 
-const fetchSites = fetch("http://vtatlasoflife.org:4321/table/survey_sites")
+const fetchSites = fetch("https://vtatlasoflife.org:4321/table/survey_transects")
 .then(response => {return response.json()})
-.then(res => site_data = res.rows)
+.then(res => tran_data = res.rows)
 .then(()=>{
 var siteDropDown = d3.select("#SelectSite")
 
 var siteOptions = siteDropDown.selectAll('option')
-                              .data(site_data)
+                              .data(tran_data)
                               .enter()
                               .append('option')
-                              .attr('value', d => d.sitesName)
-                              .text(d => `${d.sitesTransect} - ${d.sitesName} (${d.sitesNotes})`);
+                              .attr('value', d => d.transect)
+                              .text(d => `${d.transect}`)
+                              .property("selected", function(d){ return d === "CONCORDWOODS"; });
                             
     siteDropDown.on("change", function() {
                      sel_site = this.value
+                 // var tranIdx = tran_data.findIndex(x => x.tranrelTransect === sel_site);
+                 //    sel_trans = tran_data[tranIdx].tranrelTransect;
+
                      console.log(this.value);
-                     getSiteAbundance();
-                     grabYrsResearcher();
+                 //    console.log("THIS IS THE INDEX VALUE: "+tranIdx);
+                 //    console.log(site_data[tranIdx].tranrelTransect);
+
+                     changeAllTheVals(this.value);
                     });
               });
+
+function changeAllTheVals(value){
+  getSiteAbundance(value);
+  grabYrsResearcher();
+  makeTransectMap(value);
+  retrieveSiteTrends();
+}
 
 // apicall
 function getSiteAbundance(){    
 
   // UNCOMMENT THIS TO USE THE API - DONT FORGET TO UNCOMMENT THE } at end of doc
-  const fetchSpecies = fetch("http://vtatlasoflife.org:4321/relabun?relabunSite="+sel_site)
+  const fetchSpecies = fetch("https://vtatlasoflife.org:4321/table/transect_relabun?tranrelTransect="+sel_site+"&orderBy=tranrelYear&orderDir=ASC")
                        .then(function(response){ return response.json()});
   
   //resolve the promise then print
   Promise.resolve(fetchSpecies) // Waits for fetchPromise to get its value
   .then(function (res){ 
-    site_data = res.rows.sort(d => d.relabunYear)
+    site_data = res.rows//.sort(d => d.relabunYear)
     console.log(site_data)
   }).then(() => {
 
 // Create the positional scales.
 var x = d3.scaleLinear()
-  .domain(d3.extent(site_data, d => d.relabunYear)).nice()
+  .domain(d3.extent(site_data, d => d.tranrelYear))
   .range([marginLeft, sa_width - marginRight]);
 
 var y = d3.scaleLinear()
@@ -224,11 +242,12 @@ svg.append("g")
 
 
 // Compute the points in pixel space as [x, y, z], where z is the name of the series.
-var points = site_data.map((d) => [x(d.relabunYear), y(d.relabunRelativeAbundance), d.relabunSpecies]);
+var points = site_data.map((d) => [x(d.tranrelYear), y(d.tranrelRelativeAbundance), d.tranrelSpecies]);
 
-var points = points.sort(d3.ascending)
+var points = points.slice().sort(function(a,b) { return a - b})
 
 console.log(points);
+//console.log(pointsFirst)
 
 // An optional Voronoi display (for fun).
 if (voronoi) svg.append("path")
@@ -290,7 +309,7 @@ function pointermoved(event) {
   path.style("stroke", ({z}) => z === k ? null : "#ddd")
       .style("stroke-width",({z}) => z === k ? 4 : 1)
       .filter(({z}) => z === k).raise();
-  dot.attr("transform", `translate(${sa_width},${y})`)
+  dot.attr("transform", `translate(${sa_margin.left+50},${y})`)
       .select("text")
       .text(k)
       .style("font-size",20)

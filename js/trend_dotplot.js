@@ -21,7 +21,7 @@ var td_innerWidth = td_width - (td_margin.left + td_margin.right);
 var td_innerHeight = td_height - (td_margin.top + td_margin.bottom);
 
 // apicall
-const fetchPromise = fetch("http://vtatlasoflife.org:4321/trends")
+const fetchPromise = fetch("https://vtatlasoflife.org:4321/trends")
                      .then(function(response){ return response.json()});
 
 //resolve the promise then print
@@ -45,13 +45,6 @@ Promise.resolve(fetchPromise) // Waits for fetchPromise to get its value
 var trendEst = trendSummary.map(a => a.trendTrend);
 var trendSpp = trendSummary.map(a => a.trendSpecies);
 
-/*
-console.log(trendSummary[0]);
-console.log(trendEst); 
-console.log(trendSpp);
-console.log('We got here bro');
-*/
-
 // Create the SVG container
 var svg = d3.select("#orderedTrends")
   .append("svg")
@@ -60,16 +53,16 @@ var svg = d3.select("#orderedTrends")
   .append("g")
   .attr("transform", "translate(" + td_margin.left + "," + td_margin.top + ")");
 
-  console.log(d3.range(trendSummary.length))
+console.log(d3.range(trendSummary.length));
+
 // Set up the scales
 var xScale = d3.scaleBand()
   .domain(d3.range(trendSummary.length))
   .range([td_margin.left, td_innerWidth]);
 
 var yScale = d3.scaleLinear()
-  .domain([d3.min(trendSummary.map(d => d.trendLCI)), d3.max(trendSummary.map(d => d.trendUCI))])
+  .domain([d3.min(trendSummary.map(d => d.trendLCI)), d3.max(trendSummary.map(d => d.trendUCI))]).nice()
   .range([td_innerHeight, td_margin.top]);
-
 
 // Plot the segments
 svg.selectAll("line")
@@ -81,64 +74,91 @@ svg.selectAll("line")
   .attr("y2", d => yScale(d.trendUCI))
   .attr("stroke", "gray");  
 
-  var focusText = svg
-  .append('g')
-  .append('text')
-    .style("opacity", 0)
-    .style("font-size", "20px")
-    .style("white-space","pre-line")
-    .attr("text-anchor", "left")
-    .attr("alignment-baseline", "middle")
+function showSppFunction(d, x, y) {
+  d3.select(this).transition()
+      .duration('200')
+      .attr("r", 7.5);
 
-  // Plot the points
+  //Makes div appear
+  div.transition()
+  .duration(100)
+  .style("opacity", 1);
+
+  div.html(`${d3.select(this).data()[0].trendSpecies}</b><br>Trend: ${Math.round((d3.select(this).data()[0].trendTrend*10000/100))/100}`)
+    .style('left', `${d.pageX+td_innerWidth-td_width-300}px`)
+    .style('top', `${d.pageY-td_height+td_margin.top+100}px`);
+}
+
+// Function to handle mouseover event
+function handleMouseOver(event, d) {
+  
+}
+
+
+function clickon(i) {
+  // recover coordinate we need
+  var sppSelect = d3.select(this).data()[0].trendSpecies;
+  console.log("Congratulations! You've selected: " + sppSelect);
+ }
+ 
+ var div = d3.select("#orderedTrends").append("div")
+             .attr("class", "tooltip")
+             .style("opacity", 0);
+            
+     
+
+// Plot the points
 svg.selectAll("circle")
-.data(trendSummary)
-.enter().append("circle")
-.attr("cx", (d, i) => xScale(i))
-.attr("cy", d => yScale(d.trendTrend))
-.attr("r", 4.5)
-.attr("fill", d => d.trendTrend < 0 ? "red" : "blue")
-.attr("opacity", d => d.trendStatSig ? "1" : "0.5")
-.attr("stroke", d => d.trendStatSig ? "black" : "gray")
-.on('mouseover', function (d,i){
-        d3.select(this).transition()
-          .duration('200')
-          .attr("r", 7.5);
-})
-.on('mouseout', function (d, i) {
-          d3.select(this).transition()
-             .duration('200')
-             .attr("r", 4.5);})
-.on('click', clickon);
+  .data(trendSummary)
+  .enter().append("circle")
+  .attr("cx", (d, i) => xScale(i))
+  .attr("cy", d => yScale(d.trendTrend))
+  .attr("r", 4.5)
+  .attr("fill", d => d.trendTrend < 0 ? "red" : "blue")
+  .attr("opacity", d => d.trendStatSig ? "1" : "0.5")
+  .attr("stroke", d => d.trendStatSig ? "black" : "gray")
+  .on('mouseover', showSppFunction)
+  .on('mouseout', function (d, i) {
+    d3.select(this).transition()
+         .duration('200')
+         .attr("r", 4.5);
+        
+        //makes div disappear
+     div.transition()
+     .duration('200')
+     .style("opacity", 0);})
+  .on('click', clickon);
+
+// Draw the horizontal dashed line
+svg.append("line")
+  .attr("x1", xScale(0))
+  .attr("x2", td_innerWidth)
+  .attr("y1", yScale(0))
+  .attr("y2", yScale(0))
+  .attr("stroke", "gray")
+  .attr("stroke-dasharray", "4");
+
+// Draw y-axis
+svg.append('g')
+  .attr('transform', `translate(${td_margin.left - 10})`)
+  .call(d3.axisLeft(yScale));
+
+svg.append("text")
+  .attr("class", "y label")
+  .attr("transform", "rotate(-90)")
+  .attr("y", 0 - (td_margin.left / 0.5))
+  .attr("x", 0 - (td_innerHeight / 2))
+  .attr("dy", "1em")
+  .style("text-anchor", "middle")
+  .text("Trend \n (change / year)");
+
+
+
 
 // What happens when the mouse move -> show the annotations at the right positions.
 // Add a tooltip
  
-// Function to handle mouseover event
-function handleMouseOver(event, d) {
-  const species = d.trendSpecies;
-  const trend_est = d.trendTrend;
 
-  tooltip.transition()
-    .duration(200)
-    .style('opacity', .9);
-  tooltip.html(`${species}</b><br>Trend: ${Math.round((trend_est*10000)/100)}`)
-    .style('left', `${event.pageX}px`)
-    .style('top', `${event.pageY - 28}px`);
-}
-// Function to handle mouseout event
-function handleMouseOut() {
-tooltip.transition()
-  .duration(500)
-  .style('opacity', 0);
-}
-
-function clickon() {
-  // recover coordinate we need
-  var sppSelect = d3.select(this).data()[0].trendSpecies;
-  console.log("Congratulations! You've selected: " + sppSelect);
-  }
- 
 // Draw the horizontal dashed line
 svg.append("line")
   .attr("x1", xScale(0))
@@ -152,21 +172,4 @@ svg.append("line")
 svg.append('g')
     .attr('transform', `translate(${td_margin.left-10})`)
     .call(d3.axisLeft(yScale));
-
-svg.append("text")
-        .attr("class", "y label")
-        .attr("transform", "rotate(-90)")
-        .attr("y", 0 - (td_margin.left/2))
-        .attr("x",0 - (td_innerHeight / 2))
-        .attr("dy", "1em")
-        .style("text-anchor", "middle")
-        .text("Trend");
 });
-
-/*var imgs = svg
-            .append("svg:image")
-            .attr("xlink:href", "https://vtecostudies.org/wp-content/uploads/2014/08/eastern-wood-pewee.jpg")
-                .attr("x", width - 200)
-                .attr("y", 200)
-                .attr("width", "200")
-                .attr("height", "425");*/

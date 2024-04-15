@@ -1,60 +1,93 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="utf-8"/> <!-- resolve 'character encoding' error -->
-<!-- don't allow the browser to cache results -->
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-<meta http-equiv="Pragma" content="no-cache" />
-<meta http-equiv="Expires" content="0" />
-
-<script src="https://d3js.org/d3.v4.js"></script>
-<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
-<script src="https://cdn.plot.ly/plotly-2.27.0.min.js" charset="utf-8"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.3/leaflet.min.css" integrity="sha512-KJRB1wUfcipHY35z9dEE+Jqd+pGCuQ2JMZmQPAjwPjXuzz9oL1pZm2cd79vyUgHQxvb9sFQ6f05DIz0IqcG1Jw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.3/leaflet.min.js" integrity="sha512-Io0KK/1GsMMQ8Vpa7kIJjgvOcDSwIqYuigJEYxrrObhsV4j+VTOQvxImACNJT5r9O4n+u9/58h7WjSnT5eC4hA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-minimap/3.6.1/Control.MiniMap.min.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-
-<script type='module' src="js/trends.js"></script>
-<script type='module' src="js/VTshape.js"></script>
-<script type='module' src="js/VTleaflet.js"></script>
-<script type='module' src="js/trend_dotplot.js"></script>
-<script type='module' src="js/Site_abundance.js"></script>
-<script type='text/javascript' src="js/SpeciesSelector.js"></script>
+  <title>Forest Bird Monitoring Dashboard</title>
+  <link rel="icon" type = "jgp" href="http://vtatlasoflife.org/FBMP_dashboard/etc/VCE bird sun only.jpg" />
+  <head>
+  <meta charset="utf-8"/> <!-- resolve 'character encoding' error -->
+  <!-- don't allow the browser to cache results -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  
+  <script src="https://d3js.org/d3.v4.js"></script>
+  <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+  <script src="https://cdn.plot.ly/plotly-2.27.0.min.js" charset="utf-8"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.3/leaflet.min.css" integrity="sha512-KJRB1wUfcipHY35z9dEE+Jqd+pGCuQ2JMZmQPAjwPjXuzz9oL1pZm2cd79vyUgHQxvb9sFQ6f05DIz0IqcG1Jw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.3/leaflet.min.js" integrity="sha512-Io0KK/1GsMMQ8Vpa7kIJjgvOcDSwIqYuigJEYxrrObhsV4j+VTOQvxImACNJT5r9O4n+u9/58h7WjSnT5eC4hA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-minimap/3.6.1/Control.MiniMap.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  
+  <script type='module' src="./js/trends.js"></script>
+  <script type='module' src="./js/trend_dotplot.js"></script>
+  <script type='module' src="./js/Site_abundance.js"></script>
+  <script type='module' src="./js/doughnut_landing.js"></script>
+  <script type='module' src="./js/SpeciesSelector.js"></script>
+  <script type='module' src="./js/yearSurveyed.js"></script>
+  <script type='module' src="./js/FBMP_statistics.js"></script>
+  <script type='module' src="./js/VTleaflet.js"></script>
 
 
 </head>
-
 <body>
-<div class="jumbotron text-center">
-    <h1 style= "text-align: center"> Forest Bird Monitoring Program Dashboard </h1>
+  <div class="container" style="margin-right: 2%; margin-left: 2%; margin-top: 2%">
+    <img style="opacity: 0.4" src="https://vtecostudies.org/wp-content/uploads/2014/06/fbmp-banner-3.jpg">
+    <div style= "color: rgb(12, 12, 12); font-weight: bold; font-family: 'Lucida Sans'; position: absolute; top: 7%; left: 33%; text-anchor: left"> 
+           <h1>Forest Bird Monitoring Program</h1>
+           </div>
+    <div style="position: absolute; top: 15%; left: 42%; height: 33%; width: 25%;"; id="relative_abundance_div">
+      <h3 style="text-align: center; font-weight: bold;"><a href="sppSummary.html" style="color: black; text-decoration: underline">Explore Species</a></h3>
+      <a href="sppSummary.html" style="color: black;">
+        <div  style="background-color: white; padding: 10px; border-radius: 10px; z-index: 1;" id="RelativeAbundance_State"></div>
+      </a>
     </div>
-    
-<div class="container">
-    <div class="row" style="height:450px; width:95%">
-      <div id="relative_abundance_div" class="col-md-4">
-        <h3>Explore Species</h3>
-        <div id="RelativeAbundance_State"></div>
-      </div>
-      <div id="orderedTrends_div" class="col-md-4">
-          <h3>Explore Trends</h3>
-          <div id="orderedTrends"></div>
-      </div>
-      <div class="col-md-4">
-          <h3> Explore Sites</h3>
-          <div id="surveySites"></div>
-      </div>
-      </div> <!-- End of 1st Row -->
-      <div class="row" style="height:450px; width:95%">
-        <div class="col-md-6" id="site_abundance_div">
-            <div id="Site_Relative_Abundance"></div>
-          </div>
+    <div style="position: absolute; top: 7.5%; left: 70%; height: 65%; width: 25%;">
+      <h3 style="text-align: center; font-weight: bold;"><a href="siteSummary.html" style="color: black; text-decoration: underline;">Explore Survey Sites</a></h3>
+      <div style="background-color: white; padding: 20px; border-radius: 10px;
+                  height: 100%; overflow: hidden;" id="surveySites"></div>
+  </div>
+  <div style="position: absolute; top: 55%; left: 86%; z-index: 999">
+    <img src="http://vtatlasoflife.org/FBMP_dashboard/etc/VCE_logo_vertical_RGB_transparent.png" style="width: 150px">
+  </div>
+  <div style = "position: absolute; top: 55%; left: 42%; width:25%">
+    <br>
+    <br>
+    <div style="background-color: rgba(196, 199, 201, 0.682); 
+                border-radius: 10px;
+                padding: 15px;
+                border-color: black;
+                border-width: 3;">
+ <i class="fa fa-binoculars" aria-hidden="true" style="float:left; font-size: 48px; padding: 5px"></i>
+    <p style="font-size: 14pt">Since 1989, <span id="FBMP_stats_birds"></span> individual birds of <span id="FBMP_stats_species"></span> species have been observed on <span id="FBMP_stats_counts"></span> point counts submitted by <span id="FBMP_stats_obs"></span> observers spanning <span id="FBMP_stats_days"></span> days and over <span id="FBMP_stats_totalHours"></span> observation hours</p>
     </div>
-</div>
+  </div>
+
+  <div style = "position: absolute; top: 10%; left: 5%; width:25%">
+    <div style="background-color: rgba(190, 192, 193, 0.82); 
+                border-radius: 10px;
+                padding: 15px;
+                border-color: black;
+                border-width: 3;
+                box-shadow: 20px 20px 50px grey;">
+    <p style="font-weight: bold; font-size: 16pt">Welcome to Forest Bird Monitoring Program's data dashboard</p>
+    <p> The Forest Bird Monitoring Program has been taking the pulse of Vermont's interior forest breeding bird populations since 1989. This dashboard allows users to explore and interact with the data and view up-to-date results </p>
+    </div>
+  </div>
+  <div style = "position: absolute; top: 38%; left: 5%; height: 30%; width: 25%" id="Trend_doughnut">
+    <h3 style="text-align: center; font-weight: bold;"><a href="trendSummary.html" style="color: black; text-decoration: underline">Explore Population Trends</a></h3>
+    <a href="trendSummary.html">
+         <div style = "background-color:rgba(253, 252, 252, 0.537); 
+                       padding-top: 20px;
+                       padding-right: 5px;
+                       padding-bottom: 20px;
+                       border-radius: 10px" id="TrendCircle"></div>
+    </div>
+  
+  </div>
 </body>
-    <a href="index.html">Back to home</a>
+    <a href="landing_page.html">Back to home</a>
     </html>

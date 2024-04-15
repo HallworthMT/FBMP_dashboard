@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <title>Trend Spotlight</title>
+  <link rel="icon" type = "jgp" href="etc/VCE bird sun only.jpg" />
+<head>
+<meta charset="utf-8"/> <!-- resolve 'character encoding' error -->
+<!-- don't allow the browser to cache results -->
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+
+<script src="https://d3js.org/d3.v4.js"></script>
+<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+<script src="https://cdn.plot.ly/plotly-2.27.0.min.js" charset="utf-8"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.3/leaflet.min.css" integrity="sha512-KJRB1wUfcipHY35z9dEE+Jqd+pGCuQ2JMZmQPAjwPjXuzz9oL1pZm2cd79vyUgHQxvb9sFQ6f05DIz0IqcG1Jw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.3/leaflet.min.js" integrity="sha512-Io0KK/1GsMMQ8Vpa7kIJjgvOcDSwIqYuigJEYxrrObhsV4j+VTOQvxImACNJT5r9O4n+u9/58h7WjSnT5eC4hA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-minimap/3.6.1/Control.MiniMap.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<script type='module' src="./js/trends.js"></script>
+<script type='module' src="./js/VTshape.js"></script>
+<script type='module' src="./js/VTleaflet.js"></script>
+<script type='module' src="./js/trend_dotplot.js"></script>
+<script type='module' src="./js/Site_abundance.js"></script>
+<script type='module' src="./js/doughnut_trends.js"></script>
+<script type='module' src="./js/SpeciesSelector.js"></script>
+<script type='module' src="./js/yearSurveyed.js"></script>
+
+<style>
+  .tooltip {
+position: absolute;
+text-align: center;
+padding: 8px;
+font: 12px sans-serif;
+background: #F9F9F9;
+border: 1px solid #888;
+border-radius: 8px;
+pointer-events: none;
+}
+</style>
+</head>
+
+<div class="jumbotron text-center">
+<h1 style= "text-align: center;">Trend Summary </h1>
+</div>
+
+<div class="container">
+    <div class="row" style = "height: 100px">
+      <p>The chart below (left) displays population trends for all species. Hover over each trend estimate to reveal the species. The dark red dots indicate species with significant declines, dark blue dots indicate significant increases, while the species showing no significant trend are in light blue if slightly increasing, or light red if slightly declining. Grey lines through the dots indicate the 95% confidence interval. Species are indicated by their <a href="https://vtecostudies.org/wp-content/uploads/2014/08/vce-fbmp-four-letter-codes.pdf" target="_blank" rel="noopener noreferrer">4-letter code</a>.</p>
+    </div>
+    <div class="row" style="height: 500px">
+      <div id="orderedTrends_div" class="col-md-7">
+          <div class = "row">
+          <div id="orderedTrends"></div>
+          </div>
+      </div>
+      <div class="col-md-5" id="Trend_doughnut">
+            <div id="TrendCircle"></div>
+          </div>
+    </div>
+</div>
+
+<a href="landing_page.html">Dashboard home</a>
+
+</html>

@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html>
+  <title>Species Spotlight</title>
+  <link rel="icon" type = "jgp" href="etc/VCE bird sun only.jpg" />
 <head>
 <meta charset="utf-8"/> <!-- resolve 'character encoding' error -->
 <!-- don't allow the browser to cache results -->
@@ -19,10 +21,9 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
 
-<script type='module' src="js/trends.js"></script>
-<script type='module' src="js/VTshape.js"></script>
-<script type='text/javascript' src="js/SpeciesSelector.js"></script>
-<script type='module' src="js/Trendleaflet.js"></script>
+<script type='module' src="./js/sppSummary.js"></script>
+<script type='module' scr="./js/VTshapes.js"></script>
+
 
 <style>
   .tooltip {
@@ -35,98 +36,58 @@ border: 1px solid #888;
 border-radius: 8px;
 pointer-events: none;
 }
+
+.dot {
+  height: 12px;
+  width: 12px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+}
 </style>
 </head>
 
-<div class="jumbotron text-center">
-<h1 style= "text-align: center"> Forest Bird Monitoring Program Dashboard </h1>
+<div class="jumbotron text-center" style="height: 25px;"> 
+<h1 style= "text-align: center;">Species Focus</h1>
 </div>
 
-<div class="container">
-<div class="row">
-  <div class="col-md-5">
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
-    <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
-
+<div class="container-fluid" style="margin: 30px;"> 
+  <div class="row" style="height: 600px;">
+  <div class="col-lg-4" style="width:100%">
+    <div class="row">
+    <p>Select a species from the dropdown menu to view its long-term population trend at all sites combined. Hover over the chart to see relative abundance by year. The grey outline indicates the 95% confidence interval of relative abundance. </p>
+  <p><h4>Select a species of interest:</h4></p>
+  <p><select id="Species_Select" style="background-color: white;"></select></p>
   <br>
-  <p><h4>Select a species of interest:</h4> <select id="Species_Select" style="background-color: white;"> 
-    <option value=AMGO>American Goldfinch (</em>Spinus tristis</em>)</option>                  
-    <option value=AMRE>American Redstart (</em>Setophaga ruticilla</em>)</option>               
-    <option value=AMRO>American Robin (</em>Turdus migratorius</em>)</option>                   
-    <option value=BAOR>Baltimore Oriole (</em>Icterus galbula</em>)</option>                    
-    <option value=BAWW>Black-and-white Warbler (</em>Mniotilta varia</em>)</option>             
-    <option value=BCCH>Black-capped Chickadee (</em>Poecile atricapillus</em>)</option>         
-    <option value=BHCO>Brown-headed Cowbird (</em>Molothrus ater</em>)</option>                 
-    <option value=BHVI>Blue-headed Vireo (</em>Vireo solitarius</em>)</option>                  
-    <option value=BLBW>Blackburnian Warbler (</em>Setophaga fusca</em>)</option>                
-    <option value=BLJA>Blue Jay (</em>Cyanocitta cristata</em>)</option>                        
-    <option value=BRCR>Brown Creeper (</em>Certhia americana</em>)</option>                     
-    <option value=BTBW>Black-throated Blue Warbler (</em>Setophaga caerulescens</em>)</option>  
-    <option value=BTNW>Black-throated Green Warbler (</em>Setophaga virens</em>)</option>       
-    <option value=CAWA>Canada Warbler (</em>Cardellina canadensis</em>)</option>                
-    <option value=CEDW>Cedar Waxwing (</em>Bombycilla cedrorum</em>)</option>                   
-    <option value=COYE>Common Yellowthroat (</em>Geothlypis trichas</em>)</option>              
-    <option value=CSWA>Chestnut-sided Warbler (</em>Setophaga pensylvanica</em>)</option>       
-    <option value=DOWO>Downy Woodpecker (</em>Dryobates pubescens</em>)</option>                
-    <option value=EAWP>Eastern Wood-Pewee (</em>Contopus virens</em>)</option>                  
-    <option value=GCFL>Great Crested Flycatcher (</em>Myiarchus crinitus</em>)</option>         
-    <option value=GCKI>Golden-crowned Kinglet (</em>Regulus satrapa</em>)</option>              
-    <option value=GRCA>Gray Catbird (</em>Dumetella carolinensis</em>)</option>                 
-    <option value=HAWO>Hairy Woodpecker (</em>Dryobates villosus</em>)</option>                 
-    <option value=HETH>Hermit Thrush (</em>Catharus guttatus</em>)</option>                     
-    <option value=LEFL>Least Flycatcher (</em>Empidonax minimus</em>)</option>                  
-    <option value=MAWA>Magnolia Warbler (</em>Setophaga magnolia</em>)</option>                 
-    <option value=MODO>Mourning Dove (</em>Zenaida macroura</em>)</option>                      
-    <option value=MOWA>Mourning Warbler (</em>Geothlypis philadelphia</em>)</option>            
-    <option value=MYWA>Myrtle Warbler (</em>Setophaga coronata coronata</em>)</option>          
-    <option value=NAWA>Nashville Warbler (</em>Oreothlypis ruficapilla</em>)</option>           
-    <option value=NOPA>Northern Parula (</em>Setophaga americana</em>)</option>                 
-    <option value=NOWA>Northern Waterthrush (</em>Parkesia noveboracensis</em>)</option>        
-    <option value="OVEN" selected>Ovenbird (</em>Seiurus aurocapilla</em>)</option>                        
-    <option value=PIWO>Pileated Woodpecker (</em>Dryocopus pileatus</em>)</option>              
-    <option value=PUFI>Purple Finch (</em>Haemorhous purpureus</em>)</option>                   
-    <option value=RBGR>Rose-breasted Grosbeak (</em>Pheucticus ludovicianus</em>)</option>      
-    <option value=RBNU>Red-breasted Nuthatch (</em>Sitta canadensis</em>)</option>              
-    <option value=RBWO>Red-bellied Woodpecker (</em>Melanerpes carolinus</em>)</option>         
-    <option value=RESQ>North American Red Squirrel (</em>Tamiasciurus hudsonicus</em>)</option> 
-    <option value=REVI>Red-eyed Vireo (</em>Vireo olivaceus</em>)</option>                      
-    <option value=SCJU>Slate-colored Junco (</em>Junco hyemalis  hyemalis</em>)</option>        
-    <option value=SCTA>Scarlet Tanager (</em>Piranga olivacea</em>)</option>                    
-    <option value=SOSP>Song Sparrow (</em>Melospiza melodia</em>)</option>                      
-    <option value=SWSP>Swamp Sparrow (</em>Melospiza georgiana</em>)</option>                   
-    <option value=SWTH>Swainson's Thrush (</em>Catharus ustulatus</em>)</option>                
-    <option value=TUTI>Tufted Titmouse (</em>Baeolophus bicolor</em>)</option>                  
-    <option value=VEER>Veery (</em>Catharus fuscescens</em>)</option>                           
-    <option value=WBNU>White-breasted Nuthatch (<em>Sitta carolinensis</em>)</option>          
-    <option value=WIWR>Winter Wren (</em>Troglodytes hiemalis</em>)</option>                    
-    <option value=WOTH>Wood Thrush (</em>Hylocichla mustelina</em>)</option>                    
-    <option value=WTSP>White-throated Sparrow (</em>Zonotrichia albicollis</em>)</option>       
-    <option value=YBFL>Yellow-bellied Flycatcher (</em>Empidonax flaviventris</em>)</option>    
-    <option value=YBSA>Yellow-bellied Sapsucker (</em>Sphyrapicus varius</em>)</option>         
-    <option value=YSFL>Yellow-shafted Flicker (</em>Colaptes auratus auratus</em>)</option>     
-    <option value=YTVI>Yellow-throated Vireo (</em>Vireo flavifrons</em>)</option>              
-    <option value=RESQ>North American Red Squirrel (</em>Tamiasciurus hudsonicus</em>)</option> 
-    <option value=CHIP>Eastern Chipmunk (</em>Tamias striatus</em>)</option>                    
-    <option value=GRSQ>Eastern Gray Squirrel (</em>Sciurus carolinensis</em>)</option>
-  </select></p>        
   <br>
-
   </div>
-  <div id="relative_abundance_div" class="col-md-7">
+  <div class = "row" style="height: 100%; position: relative">
+  <div id="relative_abundance_div" style="height: 75%; width: 100%; position: relative">
+    <div id="RelativeAbundance_State"></div>
+  </div>
+  </div>
+</div>
+ <!--   <div class="row" id="relative_abundance_div" style="position: relative; height: 50%; border: black">
       <div id="RelativeAbundance_State"></div>
-      <br>
-  </div>
-</div>
-<div class="row">
-  <div class="col-md-8">
+    </div> -->
+<div class="col-lg-4" style="width:100%">
+  <p>In the map below the color of the dot indicates whether your selected species is signficantly increasing (<span class="dot" style="background-color: blue;"></span>), 
+    possibly increasing (<span class="dot" style="background-color: blue; opacity: 0.5;"></span>),
+    possibly decreasing (<span class="dot" style="background-color: red; opacity: 0.5;"></span>), or 
+    decreasing (<span class="dot" style="background-color: red;"></span>) at a given site.
+     Click on the dot to see the name of the study site and the species' population trend estimate for that site.</p>
       <div id="trendSites" class="tabContentBot" style="height:600px; width:100%; overflow:hidden;"></div>
       <br>
   </div>
-  <div class="col-md-4">
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
-    <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
-  </div>
-  <br>
-  </div> <!-- End of 1st Row -->
 
+  <div class="col-lg-4" id="ABUNDANCE_SITE_div" style="width:100%">
+    <p>The map below shows the relative abundance of the selected species at each study site by the size of the circle. Click on the circle to display the site name and the mean abundance at that site.</p>
+    <div id="ABUNSites" style="height:600px; width: 100%; overflow:hidden" ></div>
+  </div>
+  </div>
+</div>
+<br/>
+<div class = "row" style="text-align: left; height: auto">
+<p><a href="landing_page.html">Dashboard home</a></p>
+</div>
 </html>

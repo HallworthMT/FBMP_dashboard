@@ -1,4 +1,3 @@
-
 var element_info = document.getElementById('relative_abundance_div');
 var positionInfo = element_info.getBoundingClientRect();
 
@@ -21,9 +20,20 @@ var positionInfo = element_info.getBoundingClientRect();
   .attr('width', t_width)
   .attr('height', t_height);
 
-var sel_species = "OVEN";
-var spp_full = "Ovenbird";                  
+var sel_species = "AMGO";
+var spp_full = "American Goldfinch";                  
 var speciesFBMP; 
+var state_Trend = {
+  "trendSpecies": "AMGO",
+  "trendGuild": "PlantSeed",
+  "trendTrend": -0.16065979447174913,
+  "trendLCI": -0.24048188713677385,
+  "trendUCI": -0.09117634071885836,
+  "trendMedian": -0.15811626715443156,
+  "trendStatSig": true,
+  "trendPropInSupport": 1,
+  "trendYears": "1989-2023"
+};
 
 var dropDown = d3.select("#Species_Select")
 
@@ -32,7 +42,7 @@ window.addEventListener("load", (ev) => {
 });
 
 function populationSppDrop(){
-const fetchFBMPspp = fetch("http://vtatlasoflife.org:4321/table/FBMP_species")
+const fetchFBMPspp = fetch("https://vtatlasoflife.org:4321/table/FBMP_species")
 .then(response => {return response.json()})
 
 //resolve the promise then print
@@ -52,7 +62,9 @@ var sppOptions = dropDown.selectAll('option')
 
 var RelAbunEsts;
 
-getStateTrends();
+
+
+getStateTrends(sel_species);
 
          dropDown.on("change", function() {
                      sel_species = this.value;
@@ -65,18 +77,25 @@ getStateTrends();
                      });
  
     // apicall
-function getStateTrends(){    
+function getStateTrends(SPPtoGet,commonname){    
 
 // UNCOMMENT THIS TO USE THE API - DONT FORGET TO UNCOMMENT THE } at end of doc
-const fetchSpecies = fetch("http://vtatlasoflife.org:4321/vtabun?vtrelSpecies="+sel_species)
-                     .then(function(response){ return response.json()});
+const fetchSpecies = fetch("https://vtatlasoflife.org:4321/vtabun?vtrelSpecies="+SPPtoGet)
+                     .then(function(response){ return response.json()})
+                     .then(function (res){ 
+                      RelAbunEsts  = res.rows
+                      console.log(RelAbunEsts)
+                    });
+                     
+const speciesTrend = fetch("https://vtatlasoflife.org:4321/trends?trendSpecies="+SPPtoGet)
+                     .then(function(response){ return response.json()})
+                     .then(function(res){
+                      state_Trend = res.rows;
+                      console.log(state_Trend)
+                     });
 
-//resolve the promise then print
-Promise.resolve(fetchSpecies) // Waits for fetchPromise to get its value
-.then(function (res){ 
-  RelAbunEsts  = res.rows
-  console.log(RelAbunEsts)
-}).then(() => {
+Promise.all([fetchSpecies,speciesTrend])
+       .then(() => {
   //var sppIndices = RAEsts
   //.map((e, i) => e.vtrelSpecies === sel_species ? i : -1)
   //.filter(index => index !== -1);
@@ -121,7 +140,20 @@ Promise.resolve(fetchSpecies) // Waits for fetchPromise to get its value
  var sppLabel = svg.append('text')
  .attr("y", t_margin.top)
  .attr("x", t_margin.left)
- .text(spp_full)
+ .text(commonname)
+ .style("font-weight","bold")
+ .style("font-size","16pt")
+ 
+
+ var stTrend = state_Trend.map(d => Math.round(d.trendTrend*1000)/1000)
+ var stTrendLCI =  state_Trend.map(d => Math.round(d.trendLCI*1000)/1000)
+ var stTrendUCI =  state_Trend.map(d => Math.round(d.trendUCI*1000)/1000)
+
+ var trendLabel = svg.append('text')
+ .attr("y", t_margin.top+20)
+ .attr("x", t_margin.left)
+ .attr("text-anchor","right")
+ .text("Trend: "+stTrend+" ("+stTrendLCI+" : "+stTrendUCI+")")
  .style("font-weight","bold")
  .style("font-size","16pt")
 
@@ -234,18 +266,6 @@ svg.append("text")
 .attr("y", t_innerHeight + 40)
 .text('Year');
 
-svg.append("text")
-.attr("class", "y label")
-.attr("text-anchor", "middle")
-// this is a little weird because it's rotated 90 degrees
-// the x here is actually where on the y axis that I want it
-// The y axis here is actually where I want it on the x axis
-.attr("y", t_xScale(1989)-(t_margin.left+t_margin.right))
-.attr("x", t_yScale(d3.max(RelAbunEsts.map(d=> d.vtrelUCI))/2)-t_innerWidth/2)
-.attr("transform", "rotate(-90)")
-.attr("font-weight","bold")
-.text('Relative Abundance');
-
   // Draw x-axis
   svg.append('g')
     .attr('transform', `translate(0, ${t_innerHeight})`)
@@ -255,5 +275,20 @@ svg.append("text")
   svg.append('g')
     .attr('transform', `translate(${t_margin.left-10})`)
     .call(d3.axisLeft(t_yScale));
+
+    svg.append('g')
+    .attr("class", "y label")
+    .attr("text-anchor", "middle")
+    .call(g => g.append("text")
+           .attr("y", 10)
+           .attr("x", 0 - (t_innerHeight / 2) - (t_margin.bottom + t_margin.top)  )  
+            .style("font-size", "12pt")
+            .style("height",24)
+            .style("font-weight","bold")
+            .attr("transform", "rotate(-90)")
+            .style("z-index",10)
+            .text('Relative Abundance'));
 });  
 }
+
+export{getStateTrends}
