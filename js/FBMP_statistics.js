@@ -1,9 +1,11 @@
+import { apiUrl } from './config.js';
+
 var sumStats;
 
 getBasicStats();
 
 function getBasicStats() {
-const rawcountFetch = fetch("https://vtatlasoflife.org:4321/table/summary_statistics")
+const rawcountFetch = fetch(`${apiUrl}/table/summary_statistics`)
 .then(function(response){ return response.json()});
 
 //resolve the promise then print

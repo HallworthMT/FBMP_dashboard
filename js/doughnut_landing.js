@@ -1,3 +1,4 @@
+import { apiUrl } from './config.js';
 
 window.addEventListener("load", (ev) => {
 retrieveTrends();
@@ -9,7 +10,7 @@ function retrieveTrends(){
 
   var trendSummary;
   // UNCOMMENT THIS TO USE THE API - DONT FORGET TO UNCOMMENT THE } at end of doc
-  const fetchTrends = fetch("https://vtatlasoflife.org:4321/trends")
+  const fetchTrends = fetch(`${apiUrl}/trends`)
                        .then(function(response){ return response.json()});
   
   //resolve the promise then print

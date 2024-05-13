@@ -158,7 +158,9 @@ getSiteAbundance({site: sel_site});
 grabYrsResearcher()
 makeTransectMap("CONCORDWOODS");
 
-const fetchSites = fetch("https://vtatlasoflife.org:4321/table/survey_transects")
+import { apiUrl } from './config.js';
+
+const fetchSites = fetch(`${apiUrl}/table/survey_transects`)
 .then(response => {return response.json()})
 .then(res => tran_data = res.rows)
 .then(()=>{

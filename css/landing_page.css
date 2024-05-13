@@ -1,0 +1,139 @@
+/*
+.container {
+    margin-right: 2%; 
+    margin-left: 2%; 
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+*/
+
+.container::before {
+/*body::before {*/
+    content: "";
+    background-image: url('https://vtecostudies.org/wp-content/uploads/2014/06/fbmp-banner-3.jpg');
+    background-size: cover;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    opacity: 40%;
+    z-index: -1;
+}
+
+.landing-background {
+    opacity: 0.4;
+}
+
+.landing-title {
+    color: rgb(12, 12, 12); 
+    font-weight: bold; 
+    font-family: 'Lucida Sans'; 
+    text-decoration: underline;
+    text-align: center;
+}
+
+.landing-species-summary {
+    width: 100%;
+    height: 100%;
+    min-height: 200px;
+}
+
+.landing-item-title {
+    text-align: center; 
+    font-weight: bold;
+    color: black;
+}
+
+.landing-item-header {
+    font-weight: bold; 
+    font-size: 16pt;
+}
+
+.landing-item-text {
+    font-size: 12pt;
+    background-color: rgba(196, 199, 201, 0.5);
+    padding: 10px; 
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+.landing-item-chart {
+    background-color: white; 
+    padding: 10px; 
+    border-radius: 10px; 
+    z-index: 1;
+}
+
+.landing-site-summary {
+    width: 100%;
+    height: 100%;
+}
+
+.landing-item-map {
+    background-color: white;
+    border-radius: 10px;
+    min-width: 375px;
+    max-height: 575px;
+    min-height: 450px;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.landing-item-logo {
+    width: 100px;
+    float: right;
+}
+
+.landing-item-logo-captured { /* Use this to paint logo on top of content in the bottom-right corner */
+    position: absolute;
+    z-index: 999;
+    bottom: 3%;
+    right: 8%;
+}
+
+.landing-blurb {
+    position: absolute; 
+    top: 55%; 
+    left: 42%; 
+    width:25%;
+}
+
+.landing-blurb-sub {
+    background-color: rgba(196, 199, 201, 0.682); 
+    border-radius: 10px;
+    padding: 15px;
+    border-color: black;
+    border-width: 3;
+}
+
+.landing-welcome {
+    position: absolute; 
+    top: 10%; 
+    left: 5%; 
+    width:25%;
+}
+
+.landing-welcome-sub {
+    background-color: rgba(190, 192, 193, 0.82); 
+    border-radius: 10px;
+    padding: 15px;
+    border-color: black;
+    border-width: 3;
+    box-shadow: 20px 20px 50px grey;
+}
+
+.landing-trend {
+    min-height: 200px;
+    width: 100%;
+    padding: 0px
+}
+
+.landing-trend-donut {
+    background-color:rgba(253, 252, 252, 0.537); 
+    padding-top: 20px;
+    padding-right: 5px;
+    padding-bottom: 20px;
+    border-radius: 10px;
+}

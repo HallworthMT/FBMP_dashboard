@@ -1,0 +1,1 @@
+export const apiUrl = 'https://vtatlasoflife.org:4321';

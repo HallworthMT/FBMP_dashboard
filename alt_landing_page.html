@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Forest Bird Monitoring Dashboard</title>
+    <link rel="icon" type = "jgp" href="http://vtatlasoflife.org/FBMP_dashboard/etc/VCE bird sun only.jpg" />
+    <meta charset="utf-8"/> <!-- resolve 'character encoding' error -->
+    <!-- don't allow the browser to cache results -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    
+    <script src="https://d3js.org/d3.v4.js"></script>
+    <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.3/leaflet.min.css" integrity="sha512-KJRB1wUfcipHY35z9dEE+Jqd+pGCuQ2JMZmQPAjwPjXuzz9oL1pZm2cd79vyUgHQxvb9sFQ6f05DIz0IqcG1Jw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.3/leaflet.min.js" integrity="sha512-Io0KK/1GsMMQ8Vpa7kIJjgvOcDSwIqYuigJEYxrrObhsV4j+VTOQvxImACNJT5r9O4n+u9/58h7WjSnT5eC4hA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-minimap/3.6.1/Control.MiniMap.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="css/landing_page.css">
+    
+    <script type='module' src="./js/trends.js"></script>
+    <script type='module' src="./js/trend_dotplot.js"></script>
+    <script type='module' src="./js/Site_abundance.js"></script>
+    <script type='module' src="./js/doughnut_landing.js"></script>
+    <script type='module' src="./js/SpeciesSelector.js"></script>
+    <script type='module' src="./js/yearSurveyed.js"></script>
+    <script type='module' src="./js/FBMP_statistics.js"></script>
+    <script type='module' src="./js/VTleaflet.js"></script>
+  </head>
+
+<body>
+  <div class="container">
+    <div class="row landing-title">
+      <div class="col-lg-12">
+        <h1>Forest Bird Monitoring Program</h1>
+      </div>
+    </div>
+    <div class="row">
+      <!--
+      <div class="col-lg-6">
+        <p class="landing-item-header">Welcome to Forest Bird Monitoring Program's data dashboard</p>
+      </div>
+      -->
+    </div>
+    <div class="row">
+      <div class="col-lg-4">
+        <div class="row">
+          <p class="landing-item-header">Welcome to Forest Bird Monitoring Program's data dashboard</p>
+          <p class="landing-item-text">The Forest Bird Monitoring Program has been taking the pulse of Vermont's interior forest breeding bird populations since 1989. This dashboard allows users to explore and interact with the data and view up-to-date results </p>
+        </div>
+        <div class="row">
+          <div class="col-lg-12 landing-trend" id="Trend_doughnut">
+            <a href="trendSummary.html">
+              <h3 class="landing-item-title">Explore Population Trends</h3>
+              <div class="landing-trend-donut" id="TrendCircle">
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+
+        <div class="row">
+          <div class="col-lg-12 landing-species-summary" id="relative_abundance_div">
+            <a href="sppSummary.html">
+              <h3 class="landing-item-title">Explore Species</h3>
+              <div class="landing-item-chart" id="RelativeAbundance_State"></div>
+            </a>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-12">
+            <p class="landing-item-text">
+              Since 1989, 
+              <i class="fa fa-binoculars" aria-hidden="true" style="float:left; font-size: 48px; padding: 5px"></i>
+              <span id="FBMP_stats_birds"></span> individual birds of 
+              <span id="FBMP_stats_species"></span> species have been observed on 
+              <span id="FBMP_stats_counts"></span> point counts submitted by 
+              <span id="FBMP_stats_obs"></span> observers spanning 
+              <span id="FBMP_stats_days"></span> days and over 
+              <span id="FBMP_stats_totalHours"></span> observation hours
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col-lg-4">
+        <div class="row">
+          <div class="col-lg-12 landing-site-summary">
+            <a href="siteSummary.html">
+              <h3 class="landing-item-title">Explore Survey Sites</h3>
+              <div class="landing-item-map" id="surveySites"></div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div> <!-- End Main Content Row -->
+    
+  <hr>
+
+  <p>
+      <a href="landing_page.html">Back to home</a>
+      <a href="https://vtecostudies.org">
+        <img src="http://vtatlasoflife.org/FBMP_dashboard/etc/VCE_logo_vertical_RGB_transparent.png" class="landing-item-logo">
+      </a>
+  </p>
+<!--
+    <img class="landing-background" src="https://vtecostudies.org/wp-content/uploads/2014/06/fbmp-banner-3.jpg">
+
+  <div class="landing-welcome">
+    <div class="landing-welcome-sub">
+      <p style="font-weight: bold; font-size: 16pt">Welcome to Forest Bird Monitoring Program's data dashboard</p>
+      <p> The Forest Bird Monitoring Program has been taking the pulse of Vermont's interior forest breeding bird populations since 1989. This dashboard allows users to explore and interact with the data and view up-to-date results </p>
+    </div>
+  </div>
+
+  <div class="landing-trend" id="Trend_doughnut">
+    <a href="trendSummary.html">
+      <h3 class="landing-title">Explore Population Trends</h3>
+      <div class="landing-trend-donut"
+        id="TrendCircle">
+      </div>
+    </a>
+  </div>
+
+    <div class="landing-species-summary" id="relative_abundance_div">
+      <a href="sppSummary.html"
+        <h3 class="landing-item-title">Explore Species</h3>
+        <div class="landing-item-chart" id="RelativeAbundance_State"></div>
+      </a>
+    </div>
+
+    <div class="landing-site-summary">
+      <a href="siteSummary.html">
+        <h3 class="landing-item-title">Explore Survey Sites</h3>
+      </a>
+      <div class="landing-item-map" id="surveySites"></div>
+    </div>
+    <div class="landing-item-logo">
+      <img src="http://vtatlasoflife.org/FBMP_dashboard/etc/VCE_logo_vertical_RGB_transparent.png" style="width: 150px">
+    </div>
+
+    <div class="landing-blurb">
+      <div class="landing-blurb-sub">
+        <i class="fa fa-binoculars" aria-hidden="true" style="float:left; font-size: 48px; padding: 5px"></i>
+        <p style="font-size: 14pt">Since 1989, 
+          <span id="FBMP_stats_birds"></span> individual birds of 
+          <span id="FBMP_stats_species"></span> species have been observed on 
+          <span id="FBMP_stats_counts"></span> point counts submitted by 
+          <span id="FBMP_stats_obs"></span> observers spanning 
+          <span id="FBMP_stats_days"></span> days and over 
+          <span id="FBMP_stats_totalHours"></span> observation hours
+        </p>
+      </div>
+    </div>
+
+<a href="landing_page.html">Back to home</a>
+-->
+
+</body>
+
+</html>
