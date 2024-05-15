@@ -24,6 +24,7 @@
 <script type='module' src="./js/sppSummary.js"></script>
 <script type='module' scr="./js/VTshapes.js"></script>
 
+<link rel="stylesheet" href="css/common_page.css">
 
 <style>
   .tooltip {
@@ -46,48 +47,63 @@ pointer-events: none;
 }
 </style>
 </head>
-
+<body>
 <div class="jumbotron text-center" style="height: 25px;"> 
 <h1 style= "text-align: center;">Species Focus</h1>
 </div>
 
 <div class="container-fluid" style="margin: 30px;"> 
-  <div class="row" style="height: 600px;">
-  <div class="col-lg-4" style="width:100%">
-    <div class="row">
-    <p>Select a species from the dropdown menu to view its long-term population trend at all sites combined. Hover over the chart to see relative abundance by year. The grey outline indicates the 95% confidence interval of relative abundance. </p>
-  <p><h4>Select a species of interest:</h4></p>
-  <p><select id="Species_Select" style="background-color: white;"></select></p>
-  <br>
-  <br>
-  </div>
-  <div class = "row" style="height: 100%; position: relative">
-  <div id="relative_abundance_div" style="height: 75%; width: 100%; position: relative">
-    <div id="RelativeAbundance_State"></div>
-  </div>
-  </div>
-</div>
- <!--   <div class="row" id="relative_abundance_div" style="position: relative; height: 50%; border: black">
+  <div class="row" style="height:750px;">
+    <div class="col-lg-4" style="width:100%">
+      <div class="row">
+      <p>Select a species from the dropdown menu to view its long-term population trend at all sites combined. Hover over the chart to see relative abundance by year. The grey outline indicates the 95% confidence interval of relative abundance. </p>
+      <p><h4>Select a species of interest:</h4></p>
+      <p><select id="Species_Select" style="background-color: white;"></select></p>
+      <br>
+      <br>
+      </div>
+      <div class="row" style="height: 100%; position: relative">
+        <div id="relative_abundance_div" style="height: 75%; width: 100%; position: relative">
+          <div id="RelativeAbundance_State"></div>
+        </div>
+      </div>
+    </div>
+    <!--
+      <div class="row" id="relative_abundance_div" style="position: relative; height: 50%; border: black">
       <div id="RelativeAbundance_State"></div>
-    </div> -->
-<div class="col-lg-4" style="width:100%">
-  <p>In the map below the color of the dot indicates whether your selected species is signficantly increasing (<span class="dot" style="background-color: blue;"></span>), 
-    possibly increasing (<span class="dot" style="background-color: blue; opacity: 0.5;"></span>),
-    possibly decreasing (<span class="dot" style="background-color: red; opacity: 0.5;"></span>), or 
-    decreasing (<span class="dot" style="background-color: red;"></span>) at a given site.
-     Click on the dot to see the name of the study site and the species' population trend estimate for that site.</p>
+      </div>
+    -->
+    <div class="col-lg-4" style="width:100%">
+      <p style="min-height:120px;">
+        In the map below the color of the dot indicates whether your selected species is signficantly 
+        increasing (<span class="dot" style="background-color: blue;"></span>), 
+        possibly increasing (<span class="dot" style="background-color: blue; opacity: 0.5;"></span>),
+        possibly decreasing (<span class="dot" style="background-color: red; opacity: 0.5;"></span>), or 
+        decreasing (<span class="dot" style="background-color: red;"></span>) at a given site.
+        Click on the dot to see the name of the study site and the species' population trend estimate for that site.
+      </p>
       <div id="trendSites" class="tabContentBot" style="height:600px; width:100%; overflow:hidden;"></div>
       <br>
-  </div>
+    </div>
 
-  <div class="col-lg-4" id="ABUNDANCE_SITE_div" style="width:100%">
-    <p>The map below shows the relative abundance of the selected species at each study site by the size of the circle. Click on the circle to display the site name and the mean abundance at that site.</p>
-    <div id="ABUNSites" style="height:600px; width: 100%; overflow:hidden" ></div>
+    <div class="col-lg-4" id="ABUNDANCE_SITE_div" style="width:100%">
+      <p style="min-height:120px;">
+        The map below shows the relative abundance of the selected species at each study site by the size 
+        of the circle. Click on the circle to display the site name and the mean abundance at that site.
+      </p>
+      <div id="ABUNSites" style="height:600px; width:100%; overflow:hidden;"></div>
+    </div>
   </div>
-  </div>
-</div>
-<br/>
-<div class = "row" style="text-align: left; height: auto">
-<p><a href="landing_page.html">Dashboard home</a></p>
-</div>
+</div> <!-- end container -->
+
+<hr>
+<p>
+    <a href="/" class="landing-item-link">Back to home</a>
+    <a href="https://vtecostudies.org">
+      <img src="http://vtatlasoflife.org/FBMP_dashboard/etc/VCE_logo_vertical_RGB_transparent.png" class="landing-item-logo">
+    </a>
+</p>
+
+
+</body>
 </html>

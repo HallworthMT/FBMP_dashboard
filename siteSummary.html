@@ -22,6 +22,8 @@
 <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+<link rel="stylesheet" href="css/common_page.css">
+
 <script type='module' scr="./js/VTshapes.js"></script>
 <script type='module' src="./js/trend_dotplot.js"></script>
 <script type='module' src="./js/Site_abundance.js"></script>
@@ -42,51 +44,56 @@ pointer-events: none;
 }
 </style>
 </head>
-
+<body>
 <div class="jumbotron text-center">
 <h1 style= "text-align: center;">Site Summary </h1>
 </div>
 
-<div class="container-fluid" style="margin: 30px;";> 
+<div class="container-fluid" style="margin: 30px;"> 
   <div class="row" style="height: 600px; width: 100%">
-    <p>Use the dropdown menu above the map on the left to select a Study Site. The survey transect will appear on the map, and the species chart and trend graphic will update. The chart in the center displays the relative abundance of each species detected at the selected point. To view each species' trend, hover over the trend lines. Species are indicated by their <a href="https://vtecostudies.org/wp-content/uploads/2014/08/vce-fbmp-four-letter-codes.pdf" target="_blank" rel="noopener noreferrer">4-letter code</a>.</p>
-  <div class="col-lg-4" style="width:100%">
-    <div class = "row" style="height: 100px">
+      <p>Use the dropdown menu above the map on the left to select a Study Site. The survey transect will appear on the map, and the species chart and trend graphic will update. The chart in the center displays the relative abundance of each species detected at the selected point. To view each species' trend, hover over the trend lines. Species are indicated by their <a href="https://vtecostudies.org/wp-content/uploads/2014/08/vce-fbmp-four-letter-codes.pdf" target="_blank" rel="noopener noreferrer">4-letter code</a>.</p>
+    <div class="col-lg-4" style="width:100%">
+      <div class="row">
         <p><h4>Select a survey site:</h4>&nbsp</p>
-        <select id="SelectSite"></select>
+        <select id="SelectSite" style="height:40px;margin-bottom:10px;"></select>
         &#13
       </div> <!-- end row within column -->
-    <div class = "row" style="height: 500px" id ="SiteFocusPlot"></div>
-</div>
- <!--   <div class="row" id="relative_abundance_div" style="position: relative; height: 50%; border: black">
-      <div id="RelativeAbundance_State"></div>
-    </div> -->
-<div class="col-lg-4" style="width:100%">
-<div class = "row" style="height: 400px;" id="site_abundance_div">
-<div id="Site_Relative_Abundance" style="height: 100%; width:100%; overflow: hidden;"></div>
-</div>
-    <div class = "row" style = "margin: auto; height: 5%; width: 90%">    
-    <div style="background-color: rgb(235, 237, 238); 
-                    border-radius: 10px;
-                    padding: 15px;
-                    border-color: black;
-                    border-width: 3;
-                    text-align: left;">
-     <i class="fa fa-binoculars" aria-hidden="true" style="float:left; font-size: 48px; padding: 5px"></i>
-        <p style="font-weight: bold">This transect was surveyed between <span id="SiteSurveyYears"></span></p>
-        <span id="SiteResearchers"></span>
-        </div>
-</div>
-
-  </div>
-
-  <div class="col-lg-4" style="width:100%">
-    <div class = "row" style="height: 500px;" id="TransTrend_doughnut">
-    <div id="TransTrendCircle" style="height: 100%; width:100%"></div>
+      <div class="row" style="height: 500px" id ="SiteFocusPlot"></div>
     </div>
+  <!--   <div class="row" id="relative_abundance_div" style="position: relative; height: 50%; border: black">
+        <div id="RelativeAbundance_State"></div>
+      </div> -->
+    <div class="col-lg-4" style="width:100%">
+      <div class="row" style="height: 400px;" id="site_abundance_div">
+        <div id="Site_Relative_Abundance" style="height: 100%; width:100%; overflow: hidden;"></div>
       </div>
-</div>
-</div>
-<a href="landing_page.html">Dashboard home</a>
+      <div class="row" style="margin: auto; height: 5%; width: 90%">    
+        <div style="background-color: rgb(235, 237, 238); 
+                        border-radius: 10px;
+                        padding: 15px;
+                        border-color: black;
+                        border-width: 3;
+                        text-align: left;">
+        <i class="fa fa-binoculars" aria-hidden="true" style="float:left; font-size: 48px; padding: 5px"></i>
+            <p style="font-weight: bold">This transect was surveyed between <span id="SiteSurveyYears"></span></p>
+            <span id="SiteResearchers"></span>
+            </div>
+      </div>
+    </div>
 
+    <div class="col-lg-4" style="width:100%">
+      <div class="row" style="height: 500px;" id="TransTrend_doughnut">
+        <div id="TransTrendCircle" style="height: 100%; width:100%"></div>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <p>
+    <a href="/" class="landing-item-link">Back to home</a>
+    <a href="https://vtecostudies.org">
+      <img src="http://vtatlasoflife.org/FBMP_dashboard/etc/VCE_logo_vertical_RGB_transparent.png" class="landing-item-logo">
+    </a>
+  </p>
+</div>
+</body>
 </html>
