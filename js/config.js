@@ -5,7 +5,9 @@ switch (hostname) {
         apiUrl = 'http://localhost:4005';
         break;
     case 'vtecostudies.org':
-      apiUrl = `https://api.fbmp.vtatlasoflife.org`;
+    case 'vtatlasoflife.org':
+      //apiUrl = `https://api.fbmp.vtatlasoflife.org`;
+      apiUrl = `https://vtatlasoflife.org:4321`;
       break;
     default:
         apiUrl = `https://api.${hostname}`;
