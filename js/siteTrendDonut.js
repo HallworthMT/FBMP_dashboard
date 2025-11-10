@@ -1,5 +1,6 @@
 
 import {sel_site} from "./Site_abundance.js";
+import { apiUrl } from './config.js';
 
     // Specify the chart’s dimensions.
     var ST_element_info = document.getElementById('TransTrend_doughnut');
@@ -41,7 +42,7 @@ window.addEventListener("load", (ev) => {
     
       var trantrendSummary;
       // UNCOMMENT THIS TO USE THE API - DONT FORGET TO UNCOMMENT THE } at end of doc
-      const fetchSiteTrends = fetch("https://vtatlasoflife.org:4321/table/transect_trends/?trantrendTransect="+sel_site)
+      const fetchSiteTrends = fetch(`${apiUrl}/table/transect_trends/?trantrendTransect=${sel_site}`)
                            .then(function(response){ return response.json()});
       
       //resolve the promise then print

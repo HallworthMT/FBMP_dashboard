@@ -7,13 +7,14 @@
 //http://vtatlasoflife.org:4321/counts?countsTransect=CRAFTSBURYOU&distinct=countsYear&distinct=countsResearcher
 
 import {sel_site} from './Site_abundance.js'
+import { apiUrl } from './config.js';
 
 function grabYrsResearcher() {
 var site_researcher;
 var site_yrsurveyed;
 
 // UNCOMMENT THIS TO USE THE API - DONT FORGET TO UNCOMMENT THE } at end of doc
-const fetchResearcher = fetch("https://vtatlasoflife.org:4321/counts?countsTransect="+sel_site+"&distinct=countsResearcher")
+const fetchResearcher = fetch(`${apiUrl}/counts?countsTransect=${sel_site}&distinct=countsResearcher`)
 .then(function(response){ return response.json()});
 
 //resolve the promise then print
@@ -29,7 +30,7 @@ d3.select("#SiteResearchers")
 });
 
 // UNCOMMENT THIS TO USE THE API - DONT FORGET TO UNCOMMENT THE } at end of doc
-const fetchYrsSurv = fetch("https://vtatlasoflife.org:4321/counts?countsTransect="+sel_site+"&distinct=countsYear")
+const fetchYrsSurv = fetch(`${apiUrl}/counts?countsTransect=${sel_site}&distinct=countsYear`)
 .then(function(response){ return response.json()});
 
 //resolve the promise then print

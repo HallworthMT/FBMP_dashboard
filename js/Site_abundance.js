@@ -99,6 +99,7 @@ uniqueSpp.map(i => plotSpp(i))
 import { grabYrsResearcher } from "./yearSurveyed.js";
 import { makeTransectMap } from "./siteInset.js";
 import { retrieveSiteTrends } from "./siteTrendDonut.js";
+import { apiUrl } from './config.js';
 
 /*
 //MIKE NEED TO ADD THE YEARS A SITE WAS SURVEYED 
@@ -158,8 +159,6 @@ getSiteAbundance({site: sel_site});
 grabYrsResearcher()
 makeTransectMap("CONCORDWOODS");
 
-import { apiUrl } from './config.js';
-
 const fetchSites = fetch(`${apiUrl}/table/survey_transects`)
 .then(response => {return response.json()})
 .then(res => tran_data = res.rows)
@@ -198,7 +197,7 @@ function changeAllTheVals(value){
 function getSiteAbundance(){    
 
   // UNCOMMENT THIS TO USE THE API - DONT FORGET TO UNCOMMENT THE } at end of doc
-  const fetchSpecies = fetch("https://vtatlasoflife.org:4321/table/transect_relabun?tranrelTransect="+sel_site+"&orderBy=tranrelYear&orderDir=ASC")
+  const fetchSpecies = fetch(`${apiUrl}/table/transect_relabun?tranrelTransect=${sel_site}&orderBy=tranrelYear&orderDir=ASC`)
                        .then(function(response){ return response.json()});
   
   //resolve the promise then print

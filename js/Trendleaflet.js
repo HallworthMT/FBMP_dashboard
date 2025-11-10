@@ -4,6 +4,7 @@ import{FBMP_transects} from "./VTshapes.js"
 import{FBMP_points} from "./VTshapes.js"
 import{sel_species} from "./sppSummary.js"
 import{sppTrendMap} from "./sppSummary.js"
+import { apiUrl } from './config.js';
 
 var sel_species_trend = "OVEN"
 
@@ -80,7 +81,7 @@ function makeTrendMap(){
    logo.addTo(sppTrendMap);
 
   // UNCOMMENT THIS TO USE THE API - DONT FORGET TO UNCOMMENT THE } at end of doc
-const fetchSpeciesLeaf = fetch("https://vtatlasoflife.org:4321/table/transect_trends?trantrendSpecies="+sel_species)
+const fetchSpeciesLeaf = fetch(`${apiUrl}/table/transect_trends?trantrendSpecies=${sel_species}`)
 .then(function(response){ return response.json() });
 
 //resolve the promise then print
@@ -119,7 +120,7 @@ console.log(transectTrends)
 
 function updateTrendMap(){
 // UNCOMMENT THIS TO USE THE API - DONT FORGET TO UNCOMMENT THE } at end of doc
-const fetchSpeciesLeaf = fetch("https://vtatlasoflife.org:4321/table/transect_trends?trantrendSpecies="+sel_species)
+const fetchSpeciesLeaf = fetch(`${apiUrl}/table/transect_trends?trantrendSpecies=${sel_species}`)
 .then(function(response){ return response.json() });
 
 //resolve the promise then print

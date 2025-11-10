@@ -1,4 +1,6 @@
 
+import { apiUrl } from './config.js';
+
 let trendSummary
 
 // Set up the SVG dimensions
@@ -21,7 +23,7 @@ var td_innerWidth = td_width - (td_margin.left + td_margin.right);
 var td_innerHeight = td_height - (td_margin.top + td_margin.bottom);
 
 // apicall
-const fetchPromise = fetch("https://vtatlasoflife.org:4321/trends")
+const fetchPromise = fetch(`${apiUrl}/trends`)
                      .then(function(response){ return response.json()});
 
 //resolve the promise then print

@@ -1,3 +1,5 @@
+import { apiUrl } from './config.js';
+
 var element_info = document.getElementById('relative_abundance_div');
 var positionInfo = element_info.getBoundingClientRect();
 
@@ -42,7 +44,7 @@ window.addEventListener("load", (ev) => {
 });
 
 function populationSppDrop(){
-const fetchFBMPspp = fetch("https://vtatlasoflife.org:4321/table/FBMP_species")
+const fetchFBMPspp = fetch(`${apiUrl}/table/FBMP_species`)
 .then(response => {return response.json()})
 
 //resolve the promise then print
@@ -80,14 +82,14 @@ getStateTrends(sel_species);
 function getStateTrends(SPPtoGet,commonname){    
 
 // UNCOMMENT THIS TO USE THE API - DONT FORGET TO UNCOMMENT THE } at end of doc
-const fetchSpecies = fetch("https://vtatlasoflife.org:4321/vtabun?vtrelSpecies="+SPPtoGet)
+const fetchSpecies = fetch(`${apiUrl}/vtabun?vtrelSpecies=${SPPtoGet}`)
                      .then(function(response){ return response.json()})
                      .then(function (res){ 
                       RelAbunEsts  = res.rows
                       console.log(RelAbunEsts)
                     });
                      
-const speciesTrend = fetch("https://vtatlasoflife.org:4321/trends?trendSpecies="+SPPtoGet)
+const speciesTrend = fetch(`${apiUrl}/trends?trendSpecies=${SPPtoGet}`)
                      .then(function(response){ return response.json()})
                      .then(function(res){
                       state_Trend = res.rows;
